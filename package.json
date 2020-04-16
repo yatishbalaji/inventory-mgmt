@@ -1,0 +1,44 @@
+{
+  "name": "inventory-app",
+  "version": "1.0.0",
+  "description": "Inventory Management",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:yatishbalaji/inventory-mgmt.git"
+  },
+  "keywords": [
+    "inventory",
+    "management"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
+    "morgan": "^1.9.1",
+    "mysql2": "^2.1.0",
+    "sequelize5": "git@github.com:yatishbalaji/sequelize5.git#v5-custom",
+    "winston": "^3.2.1",
+    "winston-daily-rotate-file": "^4.4.1"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "nodemon": "^2.0.2"
+  },
+  "bugs": {
+    "url": "https://github.com/yatishbalaji/postman-docs/issues"
+  },
+  "engines": {
+    "node": "10.13"
+  }
+}
