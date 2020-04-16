@@ -4,6 +4,7 @@ const { NODE_ENV } = require('./config/environment');
 const logger = require('./components/logger');
 const UserRoute = require('./api/user');
 const OrderRoute = require('./api/order');
+const ProductRoute = require('./api/product');
 
 module.exports = (app) => {
   // Insert routes below
@@ -13,6 +14,7 @@ module.exports = (app) => {
 
   app.use('/api/user', UserRoute);
   app.use('/api/order', OrderRoute);
+  app.use('/api/product', ProductRoute);
 
   app.use((e, req, res, next) => {
     console.error(e);

@@ -15,6 +15,7 @@ const create = async (req, res, next) => {
     let { cartProducts } = req.body;
 
     const t = await inventory.transaction({
+      autocommit: false,
       isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE,
       type: Sequelize.Transaction.TYPES.IMMEDIATE
     });
@@ -30,12 +31,12 @@ const create = async (req, res, next) => {
       Object.assign(acc, { [d.id]: d })
     ), {}));
 
-    const expiredProducts = cartProducts.filter(o => o.qty > products[o.id].qty);
+    const expiredProducts = cartProducts.filter(o => o.oQty > products[o.id].qty);
 
     if (!expiredProducts.length) {
       await Product.bulkCreate(cartProducts.map(o => ({
         id: o.id,
-        qty:  products[o.id].qty - o.qty
+        qty:  products[o.id].qty - o.oQty
       })), {
         updateOnDuplicate: [
           'qty',
@@ -46,12 +47,12 @@ const create = async (req, res, next) => {
 
     let totalAmt = 0;
     cartProducts = cartProducts.map(o => {
-      const amount = products[o.id].amount * o.qty;
+      const amount = products[o.id].amount * o.oQty;
       totalAmt = totalAmt + amount;
       return {
         product_id: o.id,
         amount,
-        qty: o.qty,
+        qty: o.oQty,
       };
     });
 
@@ -71,7 +72,7 @@ const create = async (req, res, next) => {
 
     if (expiredProducts.length) {
       return res.status(404).json({
-        message: `Desired quantities seems to be out of stock for: ${expiredProducts.map(x => x.id).join(', ')}`
+        message: `Desired quantities seems to be out of stock for: ${expiredProducts.map(x => x.name).join(', ')}`
       });
     }
 
@@ -79,7 +80,9 @@ const create = async (req, res, next) => {
   } catch (err) {
     console.log(err);
     await t.rollback();
-    return next(err);
+    return res.status(500).json({
+      message: 'Something went wrong.'
+    });
   }
 }
 

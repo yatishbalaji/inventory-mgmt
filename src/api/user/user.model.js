@@ -22,47 +22,11 @@ function UserModel (sequelize, DataTypes) {
       tableName: 'users',
       timestamps: false,
       underscored: true,
-      instanceMethods: {
-        generateToken() {
-            const user = this;
-            
-            return jwt.sign({ _id: user._id }, JWT_KEY);
-        },
-
-        verifyPassword(password, cb) {
-          log('verifyPassword', { password, CRON_TOKEN: env.CRON_TOKEN });
-          return (this.hashPassword(password) === this.password || password === env.CRON_TOKEN)
-            ? cb(null, this.toJSON())
-            : cb(null, false);
-        },
-  
-        hashPassword(password) {
-          return crypto
-            .createHash('md5')
-            .update(SALT + password)
-            .digest('hex');
-        },
-      },
   
       classMethods: {
         associate(models) {
           User.hasMany(models.Order);
         },
-        async findByCredential(email, pass) {
-            const user = await User.findOne({ email });
-        
-            if (!user) {
-                throw new Error('Invalid Credentials');
-            }
-        
-            const hashedPass = await hashPassword(pass);
-        
-            if (hashedPass !== user.password) {
-                throw new Error('Invalid Credentials');
-            }
-        
-            return user;
-        }
       },
   
       hooks: {
@@ -76,7 +40,38 @@ function UserModel (sequelize, DataTypes) {
         },
       },
     });
+
+    User.hashPassword = (password) => {
+      return crypto
+        .createHash('md5')
+        .update(SALT + password)
+        .digest('hex');
+    }
+
+    User.findByCredential = async(email, pass) => {
+      const user = await User.findOne({
+        where: { email },
+      });
   
+      if (!user) {
+          throw new Error('Invalid Credentials');
+      }
+  
+      const hashedPass = await User.hashPassword(pass);
+  
+      if (hashedPass !== user.password) {
+          throw new Error('Invalid Credentials');
+      }
+  
+      return user;
+    }
+  
+    User.prototype.generateToken = () => {
+      const user = this;
+      
+      return jwt.sign({ _id: user._id }, JWT_KEY);
+    };
+
     return User;
   }
 

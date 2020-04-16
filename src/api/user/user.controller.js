@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-const UserModel = require('./user.model');
+const  { User } = require('../../sqldb');
 
 async function login(req, res, next) {
     try {
@@ -13,8 +13,8 @@ async function login(req, res, next) {
         }
 
         const { email, password } = req.body;
-
-        const user = await UserModel.findByCredential(email.toLowerCase(), password);
+        
+        const user = await User.findByCredential(email.toLowerCase(), password);
 
         const token = await user.generateToken();
 
@@ -29,7 +29,7 @@ async function create(req, res, next) {
         const { email, password, name } = req.body;
         const lEmail = email.toLowerCase();
  
-        const count = await UserModel.count({
+        const count = await User.count({
             email: lEmail,
         });
 
@@ -37,7 +37,7 @@ async function create(req, res, next) {
             return res.status(412).json({ message: 'User already exists.' });
         }
         
-        const user = await UserModel.create({
+        const user = await User.create({
             email: lEmail,
             password,
             name,
@@ -52,8 +52,9 @@ async function create(req, res, next) {
 
 async function index(req, res, next) {
     try {
-        const users = await UserModel.find()
-            .select({ name: 1 });
+        const users = await User.find({
+            attributes: ['id', 'name']
+        });
 
         return res.json(users);
     } catch (err) {
