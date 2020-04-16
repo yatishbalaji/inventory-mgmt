@@ -11,10 +11,8 @@ import { HomeComponent } from './home/home.component';
 import { SharedModule } from './shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ViewComponent } from './view/view.component';
 import { HttpTokenInterceptor } from './http.interceptor';
 import { UserComponent } from './user/user.component';
-import { ShareComponent } from './share/share.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 
@@ -23,9 +21,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     AppComponent,
     LoginComponent,
     HomeComponent,
-    ViewComponent,
     UserComponent,
-    ShareComponent,
   ],
   imports: [
     BrowserModule,
