@@ -26,7 +26,7 @@
     "lodash": "^4.17.15",
     "morgan": "^1.9.1",
     "mysql2": "^2.1.0",
-    "sequelize5": "git@github.com:yatishbalaji/sequelize5.git#v5-custom",
+    "sequelize5": "git@github.com:yatishbalaji/sequelizejs5.git#v5-custom",
     "winston": "^3.2.1",
     "winston-daily-rotate-file": "^4.4.1"
   },
