@@ -62,14 +62,14 @@ function UserModel (sequelize, DataTypes) {
       if (hashedPass !== user.password) {
           throw new Error('Invalid Credentials');
       }
-  
+
       return user;
     }
-  
-    User.prototype.generateToken = () => {
+
+    User.prototype.generateToken = function() {
       const user = this;
-      
-      return jwt.sign({ _id: user._id }, JWT_KEY);
+
+      return jwt.sign({ id: user.id }, JWT_KEY);
     };
 
     return User;

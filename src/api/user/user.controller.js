@@ -13,7 +13,7 @@ async function login(req, res, next) {
         }
 
         const { email, password } = req.body;
-        
+
         const user = await User.findByCredential(email.toLowerCase(), password);
 
         const token = await user.generateToken();

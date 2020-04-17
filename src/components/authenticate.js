@@ -11,8 +11,8 @@ async function authenticate(req, res, next) {
         if (!token) return res.sendStatus(401);
 
         const data = jwt.verify(token, JWT_KEY);
-        
-        const user = await User.findOne({ id: data.id });
+
+        const user = await User.findOne({ where: { id: data.id }});
 
         if (!user) return res.sendStatus(401);
 
