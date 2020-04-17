@@ -27,7 +27,7 @@ Admin Login http://localhost:5000/login
 ## Concurrency Testing
 `cat my_data.json`
 ```
-{"cartProducts":[{"id":1,"qty":10},{"id":2,"qty":3}]}
+{"cartProducts":[{"id":1,"oQty":10},{"id":2,"oQty":3}]}
 ```
 ### Using Apache Benchmark
 ```

@@ -99,8 +99,7 @@ export class HomeComponent implements AfterViewInit {
 
     this.inventorySource.data[i] = Object.assign(this.inventorySource.data[i], {
       checked: event.checked,
-    })
-    console.log(ids);
+    });
   }
 
   onXChange(i, oQty) {

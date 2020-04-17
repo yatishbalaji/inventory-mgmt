@@ -2,7 +2,7 @@
  * Sequelize initialization module
  */
 
-const Sequelize = require('sequelize5');
+const Sequelize = require('sequelize');
 const _ = require('lodash');
 
 const config = require('../config/environment');
