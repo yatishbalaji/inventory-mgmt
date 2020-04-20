@@ -110,7 +110,8 @@ export class HomeComponent implements AfterViewInit {
 
   onSubmit() {
     const result = this.inventorySource.data
-      .filter((x) => x.checked)
+      .filter((x) => x.checked);
+
     if (!result.length) return;
 
     this.isLoadingResults = true;

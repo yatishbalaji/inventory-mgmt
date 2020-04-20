@@ -48,6 +48,7 @@
                 matInput
                 name="oQty"
                 [formGroupName]="i"
+                max="10"
                 (input)="onXChange(this.paginator.pageIndex == 0 ?  i : i + this.paginator.pageIndex * this.paginator.pageSize, $event.target.value)"
               >
             </mat-form-field>
